@@ -3,14 +3,22 @@
 	export let data;
 </script>
 
-<h1>Players</h1>
+<h1>Players ({ page.url.pathname })</h1>
 
-<ul>
-	<li>here</li>
-	{#each data.players as player}
-		<li>{player.givenName}</li>
-	{/each}
-</ul>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Shirt</th>
+		</tr>
+	</thead>
 
-
-<h1>Route - { page.url.pathname }</h1>
+	<tbody>
+		{#each data.players as player}
+			<tr>
+				<td>{ player.givenName } { player.familyName }</td>
+				<td>{ player.kit }</td>
+			</tr>
+		{/each}
+	</tbody>
+</table>
