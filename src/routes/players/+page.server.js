@@ -14,8 +14,6 @@ export const load = async () => {
 
 export const actions = {
 	delete: async ( { request } ) => {
-		// alert( 'Are you sure?' );
-
 		const data = await request.formData();
 
 		const playerID = data.get( 'playerID' );
@@ -24,6 +22,6 @@ export const actions = {
 			.delete()
 			.eq( 'id', playerID );
 
-		redirect( 303, '/players' );
+		// redirect( 303, '/players' );
 	}
 };
