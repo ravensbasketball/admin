@@ -19,6 +19,7 @@ https://youtu.be/d3mrdsJ0lJc?si=_waPfdFGk2dZCVcq
 		<tr>
 			<th>Name</th>
 			<th>Shirt</th>
+			<th>&nbsp;</th>
 		</tr>
 	</thead>
 
@@ -27,6 +28,12 @@ https://youtu.be/d3mrdsJ0lJc?si=_waPfdFGk2dZCVcq
 			<tr>
 				<td><a href="/players/{ player.id }">{ player.givenName } { player.familyName }</a></td>
 				<td>{ player.kit }</td>
+				<td>
+					<form method="POST" action="?/delete">
+						<input name="playerID" type="hidden" value="{ player.id }" />
+						<button type="submit">Delete</button>
+					</form>
+				</td>
 			</tr>
 		{/each}
 	</tbody>
