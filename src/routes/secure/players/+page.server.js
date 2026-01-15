@@ -1,14 +1,16 @@
 import { redirect } from '@sveltejs/kit';
 import { supabase } from '$lib/supabaseClient';
 
-export const load = async () => {
+export const load = async ( { parent }) => {
+	await parent();
+
 	const { data } = await supabase.from( 'players' )
 		.select()
 		.order( 'givenName', { ascending: true } )
 		.order( 'familyName', { ascending: true } );
 
 	return {
-		players: data ?? [],
+		players: data ?? []
 	};
 }
 
@@ -22,6 +24,6 @@ export const actions = {
 			.delete()
 			.eq( 'id', playerID );
 
-		// redirect( 303, '/players' );
+		redirect( 303, '/secure/players' );
 	}
 };

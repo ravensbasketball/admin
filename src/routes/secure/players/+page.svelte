@@ -21,14 +21,14 @@ https://www.youtube.com/@HunterScript/playlists
 				body: formData,
 			} );
 
-			location.href = '/players';
+			location.href = '/secure/players';
 		}
 	}
 </script>
 
 <h1>Players</h1>
 
-<a href="/players/add/">Add Player</a>
+<a href="/secure/players/add/">Add Player</a>
 
 <table>
 	<thead>
@@ -43,11 +43,11 @@ https://www.youtube.com/@HunterScript/playlists
 		{#each data.players as player}
 			<tr>
 				<td>
-					<a href="/players/{ player.id }">{ player.givenName } { player.familyName }</a>
+					<a href="/secure/players/{ player.id }">{ player.givenName } { player.familyName }</a>
 				</td>
 				<td>{ player.kit }</td>
 				<td>
-					<button on:click={ () => deleteRecord( player ) }>Delete</button>
+					<button onclick={ () => deleteRecord( player ) }>Delete</button>
 				</td>
 			</tr>
 		{/each}

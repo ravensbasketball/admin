@@ -34,6 +34,6 @@ export const actions = {
 			} )
 			.eq( 'id', playerID );
 
-		redirect( 303, '/players' );
+		redirect( 303, '/secure/players' );
 	}
 };

@@ -1,9 +1,8 @@
 <script>
-	import { page } from '$app/state';
 	let { data, form } = $props();
 </script>
 
-<h1>Players ({ page.url.pathname })</h1>
+<h1>Players</h1>
 
 <form method="POST">
 	<label for="givenName">Given name *</label>
@@ -16,5 +15,7 @@
 	<input id="kit" name="kit" type="text">
 
 	<br>
+
+	<a class="button" href="/secure/players">Cancel</a>
 	<button>Add Player</button>
 </form>
