@@ -1,29 +1,11 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		%sveltekit.head%
 	</head>
-
 	<body data-sveltekit-preload-data="hover">
-		<header>
-			<nav>
-				<a href="/secure/fixtures">Fixtures</a>
-				<a href="/secure/players">Players</a>
-				<a href="/signin">Sign In</a>
-				<a href="/signout">Sign Out</a>
-			</nav>
-
-			<h1>Ravens Basketball Club - Admin</h1>
-		</header>
-
-		<main>
-			%sveltekit.body%
-		</main>
-
-		<footer>
-			<p>Footer</p>
-		</footer>
+		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
