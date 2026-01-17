@@ -1,6 +1,4 @@
-<!-- src/routes/+layout.svelte -->
 <script lang="ts">
-	import '../styles.css'
 	import { invalidate } from '$app/navigation'
 	import { onMount } from 'svelte'
 
@@ -19,9 +17,8 @@
 </script>
 
 <svelte:head>
-	<title>User Management</title>
+	<title>Ravens Basketball Club</title>
+	<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 </svelte:head>
 
-<div class="container" style="padding: 50px 0 100px 0">
-	{@render children()}
-</div>
+{@render children()}

@@ -28,9 +28,8 @@
 	}
 </script>
 
-<div class="form-widget">
+<div>
 	<form
-		class="form-widget"
 		method="post"
 		action="?/update"
 		use:enhance={handleSubmit}
@@ -67,7 +66,6 @@
 		<div>
 			<input
 				type="submit"
-				class="button block primary"
 				value={loading ? 'Loading...' : 'Update'}
 				disabled={loading}
 			/>
@@ -76,7 +74,7 @@
 
 	<form method="post" action="?/signout" use:enhance={handleSignOut}>
 		<div>
-			<button class="button block" disabled={loading}>Sign Out</button>
+			<button disabled={loading}>Sign Out</button>
 		</div>
 	</form>
 </div>

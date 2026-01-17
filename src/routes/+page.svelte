@@ -28,7 +28,7 @@
 
 <form method="POST" use:enhance={handleSubmit}>
 	{#if form?.message !== undefined}
-		<div class="success {form?.success ? '' : 'fail'}">
+		<div>
 			{form?.message}
 		</div>
 	{/if}
@@ -37,7 +37,7 @@
 	<input id="email" name="email" type="email" value={form?.email ?? ''} required>
 
 	{#if form?.errors?.email}
-		<span class="flex items-center text-sm error">
+		<span>
 			{form?.errors?.email}
 		</span>
 	{/if}
@@ -47,7 +47,7 @@
 
 	<br>
 
-	<button class="button primary block">
+	<button>
 		{ loading ? 'Loading' : 'Sign In' }
 	</button>
 </form>
