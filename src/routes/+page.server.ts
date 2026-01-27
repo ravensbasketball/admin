@@ -1,16 +1,15 @@
-// src/routes/+page.server.ts
 import { fail, redirect } from '@sveltejs/kit'
 import type { Actions, PageServerLoad } from './$types'
 
 export const load: PageServerLoad = async ( { url, locals: { safeGetSession } } ) => {
-const { session } = await safeGetSession()
+	const { session } = await safeGetSession();
 
-// if the user is already logged in return them to the account page
-if ( session ) {
-	redirect( 303, '/account' )
-}
+	// if the user is already logged in return them to the fixtures page
+	if ( session ) {
+		redirect( 303, '/fixtures' );
+	}
 
-return { url: url.origin }
+	return { url: url.origin };
 }
 
 export const actions: Actions = {
@@ -21,10 +20,10 @@ export const actions: Actions = {
 			locals: { supabase }
 		} = event
 
-		const formData = await request.formData()
+		const formData = await request.formData();
 
 		const email = formData.get( 'email' ) as string
-		const validEmail = /^[\w-\.+]+@([\w-]+\.)+[\w-]{2,8}$/.test( email )
+		const validEmail = /^[\w-\.+]+@([\w-]+\.)+[\w-]{2,8}$/.test( email );
 
 		if ( !validEmail ) {
 			return fail( 400, { errors: { email: 'Please enter a valid email address' }, email } )
@@ -42,12 +41,9 @@ export const actions: Actions = {
 				success: false,
 				email,
 				message: `There was an issue, Please contact support.`
-			} )
+			} );
 		}
 
-		return {
-			success: true,
-			message: 'Please check your email for a magic link to log into the website.'
-		}
+		redirect( 303, '/fixtures' );
 	}
 }

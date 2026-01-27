@@ -9,10 +9,12 @@
 	<body data-sveltekit-preload-data="hover">
 		<header>
 			<nav>
-				<a href="/fixtures">Fixtures</a>
-				<a href="/players">Players</a>
-				<!-- <a href="/signin">Sign In</a> -->
-				<a href="/signout">Sign Out</a>
+				<form method="post" action="?/signout" use:enhance={handleSignOut}>
+					<a href="/fixtures">Fixtures</a>
+					<a href="/players">Players</a>
+
+					<button>Sign Out</button>
+				</form>
 			</nav>
 
 			<h1>Ravens Basketball Club - Admin</h1>
