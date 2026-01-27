@@ -8,14 +8,12 @@ export const load: PageServerLoad = async ( { locals: { supabase, safeGetSession
 		redirect( 303, '/' )
 	}
 
-	/* const { data: profile } = await supabase
-		.from( 'profiles' )
-		.select( `username, full_name, website, avatar_url` )
-		.eq( 'id', session.user.id )
-		.single() */
+	const { data } = await supabase.from( 'players' )
+		.select()
+		.order( 'givenName', { ascending: true } )
+		.order( 'familyName', { ascending: true } );
 
-	// return { session, profile }
-	return { session }
+	return { session, players: data ?? [] }
 }
 
 export const actions: Actions = {
