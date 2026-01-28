@@ -24,40 +24,41 @@ export const load: PageServerLoad = async ( { params, locals: { supabase, safeGe
 }
 
 export const actions: Actions = {
-	/* update: async ({ request, locals: { supabase, safeGetSession } }) => {
-		const formData = await request.formData()
-		const fullName = formData.get('fullName') as string
-		const username = formData.get('username') as string
-		const website = formData.get('website') as string
-		const avatarUrl = formData.get('avatarUrl') as string
+	update: async ( { request, params, locals: { supabase, safeGetSession } } ) => {
+		const { session } = await safeGetSession();
 
-		const { session } = await safeGetSession()
-
-		const { error } = await supabase.from('profiles').upsert({
-			id: session?.user.id,
-			full_name: fullName,
-			username,
-			website,
-			avatar_url: avatarUrl,
-			updated_at: new Date(),
-		})
-
-		if (error) {
-			return fail(500, {
-				fullName,
-				username,
-				website,
-				avatarUrl,
-			})
+		if ( !session ) {
+			redirect( 303, '/' )
 		}
 
-		return {
-			fullName,
-			username,
-			website,
-			avatarUrl,
+		const formData = await request.formData();
+
+		const givenName = formData.get( 'givenName' ) as string
+		const familyName = formData.get( 'familyName' ) as string
+		const kit = formData.get( 'kit' ) as string
+
+		const { playerID } = params;
+
+		const { error } = await supabase.from( 'players' )
+			.update( {
+				givenName: givenName.trim()
+				,familyName: familyName.trim()
+				,kit: kit.trim()
+			} )
+			.eq( 'id', playerID );
+
+		if ( error ) {
+			return fail( 500,
+				{
+					givenName
+					,familyName
+					,kit
+				}
+			)
 		}
-	}, */
+
+		redirect( 303, '/players' );
+	},
 	signout: async ( { locals: { supabase, safeGetSession } } ) => {
 		const { session } = await safeGetSession();
 
