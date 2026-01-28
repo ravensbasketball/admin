@@ -2,7 +2,7 @@
 	let { data } = $props();
 
 	async function deleteRecord( record ) {
-		const isConfirmed = window.confirm( `Are you sure you want to delete ${record.givenName}?` );
+		const isConfirmed = window.confirm( `Are you sure you want to delete ${record.givenName} ${record.familyName}?` );
 
 		if ( isConfirmed ) {
 			const formData = new FormData();

@@ -17,40 +17,23 @@ export const load: PageServerLoad = async ( { locals: { supabase, safeGetSession
 }
 
 export const actions: Actions = {
-	/* update: async ({ request, locals: { supabase, safeGetSession } }) => {
-		const formData = await request.formData()
-		const fullName = formData.get('fullName') as string
-		const username = formData.get('username') as string
-		const website = formData.get('website') as string
-		const avatarUrl = formData.get('avatarUrl') as string
+	delete: async ( { request, locals: { supabase, safeGetSession } } ) => {
+		const { session } = await safeGetSession();
 
-		const { session } = await safeGetSession()
-
-		const { error } = await supabase.from('profiles').upsert({
-			id: session?.user.id,
-			full_name: fullName,
-			username,
-			website,
-			avatar_url: avatarUrl,
-			updated_at: new Date(),
-		})
-
-		if (error) {
-			return fail(500, {
-				fullName,
-				username,
-				website,
-				avatarUrl,
-			})
+		if ( !session ) {
+			redirect( 303, '/' )
 		}
 
-		return {
-			fullName,
-			username,
-			website,
-			avatarUrl,
-		}
-	}, */
+		const formData = await request.formData();
+
+		const playerID = formData.get( 'playerID' );
+
+		const { error } = await supabase.from('players')
+			.delete()
+			.eq( 'id', playerID );
+
+		redirect( 303, '/players' );
+	},
 	signout: async ( { locals: { supabase, safeGetSession } } ) => {
 		const { session } = await safeGetSession();
 
