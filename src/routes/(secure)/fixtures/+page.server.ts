@@ -8,14 +8,19 @@ export const load: PageServerLoad = async ( { locals: { supabase, safeGetSession
 		redirect( 303, '/' )
 	}
 
-	/* const { data: profile } = await supabase
-		.from( 'profiles' )
-		.select( `username, full_name, website, avatar_url` )
-		.eq( 'id', session.user.id )
-		.single() */
+	let now = new Date();
 
-	// return { session, profile }
-	return { session }
+	const { data: futureFixtures, error } = await supabase.from( 'fixtures' )
+		.select()
+		.gt( 'tipoff', now.toISOString() )
+		.order( 'tipoff', { ascending: true } );
+
+	const { data: pastFixtures } = await supabase.from( 'fixtures' )
+		.select()
+		.order( 'tipoff', { ascending: false } )
+		.lt( 'tipoff', now.toISOString() );
+
+	return { futureFixtures: futureFixtures ?? [], pastFixtures: pastFixtures ?? [] }
 }
 
 export const actions: Actions = {
