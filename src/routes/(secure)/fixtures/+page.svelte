@@ -20,7 +20,7 @@
 		if ( isConfirmed ) {
 			const formData = new FormData();
 
-			formData.append( 'playerID', record.id );
+			formData.append( 'fixtureID', record.id );
 
 			const response = await fetch("?/delete", {
 				method: "POST",

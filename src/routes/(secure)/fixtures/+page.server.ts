@@ -24,6 +24,23 @@ export const load: PageServerLoad = async ( { locals: { supabase, safeGetSession
 }
 
 export const actions: Actions = {
+	delete: async ( { request, locals: { supabase, safeGetSession } } ) => {
+		const { session } = await safeGetSession();
+
+		if ( !session ) {
+			redirect( 303, '/' )
+		}
+
+		const formData = await request.formData();
+
+		const fixtureID = formData.get( 'fixtureID' );
+
+		const { error } = await supabase.from('fixtures')
+			.delete()
+			.eq( 'id', fixtureID );
+
+		redirect( 303, '/fixtures' );
+	},
 	signout: async ( { locals: { supabase, safeGetSession } } ) => {
 		const { session } = await safeGetSession();
 
