@@ -28,7 +28,7 @@ https://www.youtube.com/@HunterScript/playlists
 </script>
 
 <svelte:head>
-	<title>User Management</title>
+	<title>Admin | Ravens Basketball Club</title>
 </svelte:head>
 
 <h1>Sign In</h1>
