@@ -15,7 +15,7 @@
 	} );
 
 	async function deleteRecord( record ) {
-		const isConfirmed = window.confirm( `Are you sure you want to delete ${record.tipoff}?` );
+		const isConfirmed = window.confirm( `Are you sure you want to delete ${record.homeTeam} vs ${record.awayTeam}?` );
 
 		if ( isConfirmed ) {
 			const formData = new FormData();
@@ -33,6 +33,8 @@
 </script>
 
 <h1>Future Fixtures</h1>
+
+<p><a href="/fixtures/add/" class="button">Add Fixture</a></p>
 
 <figure>
 	<table>

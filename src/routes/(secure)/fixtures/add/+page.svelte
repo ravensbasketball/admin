@@ -5,7 +5,7 @@
 
 <h1>Fixture</h1>
 
-<form action="?/update" method="POST">
+<form action="?/add" method="POST">
 	<input name="fixtureID" type="hidden" value="{ page.params.fixtureID }">
 
 	<label for="tipoff">Tip off *</label>
@@ -30,15 +30,15 @@
 	<input id="mapLink" name="mapLink" type="url" value="{ data.mapLink }" required>
 
 	<label for="scoresheet">Score sheet</label>
-	<input id="scoresheet" name="scoresheet" type="checkbox" value="{ data.scoresheet }" checked={ data.scoresheet }>
+	<input id="scoresheet" name="scoresheet" type="checkbox" value="{ data.scoresheet }">
 
 	<label for="stats">Stats</label>
-	<input id="stats" name="stats" type="checkbox" value="{ data.stats }" checked={ data.stats }>
+	<input id="stats" name="stats" type="checkbox" value="{ data.stats }">
 
 	<label for="videoURL">Video link</label>
 	<input id="videoURL" name="videoURL" type="url" value="{ data.videoURL }">
 
 	<br>
-	<button>Update Fixture</button>
+	<button>Add Fixture</button>
 	<a href="/fixtures">cancel</a>
 </form>

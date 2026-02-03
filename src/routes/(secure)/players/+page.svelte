@@ -21,7 +21,7 @@
 
 <h1>Players</h1>
 
-<a href="/players/add/">Add Player</a>
+<p><a href="/players/add/" class="button">Add Player</a></p>
 
 <table>
 	<thead>
