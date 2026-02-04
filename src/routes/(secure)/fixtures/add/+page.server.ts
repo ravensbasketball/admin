@@ -44,11 +44,6 @@ export const actions: Actions = {
 				videoURL: videoURL.trim(),
 			} );
 
-
-console.log({error});
-
-
-
 		if ( error ) {
 			return fail( 500,
 				{

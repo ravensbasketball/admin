@@ -2,10 +2,10 @@ import { fail, redirect } from '@sveltejs/kit'
 import type { Actions, PageServerLoad } from './$types'
 
 export const load: PageServerLoad = async ( { locals: { supabase, safeGetSession } } ) => {
-	const { session } = await safeGetSession()
+	const { session } = await safeGetSession();
 
 	if ( !session ) {
-		redirect( 303, '/' )
+		redirect( 303, '/' );
 	}
 
 	const { data } = await supabase.from( 'players' )
@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ( { locals: { supabase, safeGetSession
 		.order( 'givenName', { ascending: true } )
 		.order( 'familyName', { ascending: true } );
 
-	return { session, players: data ?? [] }
+	return { players: data ?? [] }
 }
 
 export const actions: Actions = {
@@ -21,7 +21,7 @@ export const actions: Actions = {
 		const { session } = await safeGetSession();
 
 		if ( !session ) {
-			redirect( 303, '/' )
+			redirect( 303, '/' );
 		}
 
 		const formData = await request.formData();
@@ -40,7 +40,7 @@ export const actions: Actions = {
 		if ( session ) {
 			await supabase.auth.signOut();
 
-			redirect( 303, '/' )
+			redirect( 303, '/' );
 		}
 	}
 }
