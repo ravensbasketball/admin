@@ -5,7 +5,7 @@
 
 <h1>Team</h1>
 
-<form method="POST">
+<form action="?/addupdate" method="POST">
 	<input name="teamID" type="hidden" value="{ page.params.teamID }">
 
 	<label for="name">Name *</label>

@@ -20,7 +20,7 @@ export const load: PageServerLoad = async ( { params, locals: { supabase, safeGe
 }
 
 export const actions: Actions = {
-	default: async ( { params, request, locals: { supabase, safeGetSession } } ) => {
+	addupdate: async ( { params, request, locals: { supabase, safeGetSession } } ) => {
 		const { session } = await safeGetSession();
 
 		if ( !session ) {
