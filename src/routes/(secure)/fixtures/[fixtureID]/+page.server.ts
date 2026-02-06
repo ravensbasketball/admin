@@ -42,32 +42,60 @@ export const actions: Actions = {
 
 		const { fixtureID } = params;
 
-		const { error } = await supabase.from( 'fixtures' )
-			.update( {
-				tipoff: new Date( tipoff.trim() ),
-				homeTeam: homeTeam.trim(),
-				awayTeam: awayTeam.trim(),
-				homeScore: homeScore.trim(),
-				awayScore: awayScore.trim(),
-				venue: venue.trim(),
-				mapLink: mapLink.trim(),
-				scoresheet: scoresheet,
-				stats: stats,
-				videoURL: videoURL.trim(),
-			} )
-			.eq( 'id', fixtureID );
+		if ( fixtureID === 'add' ) {
+			const { error } = await supabase.from( 'fixtures' )
+				.insert( {
+					tipoff: new Date( tipoff.trim() ),
+					homeTeam: homeTeam.trim(),
+					awayTeam: awayTeam.trim(),
+					homeScore: homeScore.trim(),
+					awayScore: awayScore.trim(),
+					venue: venue.trim(),
+					mapLink: mapLink.trim(),
+					scoresheet: scoresheet,
+					stats: stats,
+					videoURL: videoURL.trim(),
+				} );
 
-		if ( error ) {
-			return fail( 500,
-				{
-					tipoff
-					,homeTeam
-					,awayTeam
-				}
-			)
+			if ( error ) {
+				return fail( 500,
+					{
+						givenName
+						,familyName
+						,kit
+					}
+				)
+			}
+
+			redirect( 303, '/fixtures/add' );
+		} else {
+			const { error } = await supabase.from( 'fixtures' )
+				.update( {
+					tipoff: new Date( tipoff.trim() ),
+					homeTeam: homeTeam.trim(),
+					awayTeam: awayTeam.trim(),
+					homeScore: homeScore.trim(),
+					awayScore: awayScore.trim(),
+					venue: venue.trim(),
+					mapLink: mapLink.trim(),
+					scoresheet: scoresheet,
+					stats: stats,
+					videoURL: videoURL.trim(),
+				} )
+				.eq( 'id', fixtureID );
+
+			if ( error ) {
+				return fail( 500,
+					{
+						tipoff
+						,homeTeam
+						,awayTeam
+					}
+				)
+			}
+
+			redirect( 303, '/fixtures' );
 		}
-
-		redirect( 303, '/fixtures' );
 	},
 	signout: async ( { locals: { supabase, safeGetSession } } ) => {
 		const { session } = await safeGetSession();

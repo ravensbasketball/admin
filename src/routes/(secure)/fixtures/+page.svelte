@@ -15,7 +15,7 @@
 	} );
 
 	async function deleteRecord( record ) {
-		const isConfirmed = window.confirm( `Are you sure you want to delete ${record.homeTeam} vs ${record.awayTeam}?` );
+		const isConfirmed = window.confirm( `Are you sure you want to delete "${record.homeTeam} vs ${record.awayTeam}"?` );
 
 		if ( isConfirmed ) {
 			const formData = new FormData();

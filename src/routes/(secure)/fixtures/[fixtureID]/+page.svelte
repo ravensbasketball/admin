@@ -39,6 +39,6 @@
 	<input id="videoURL" name="videoURL" type="url" value="{ data.videoURL }">
 
 	<br>
-	<button>Update Fixture</button>
+	<button>{ page.params.fixtureID === 'add' ? 'Add' : 'Update' } Fixture</button>
 	<a href="/fixtures">cancel</a>
 </form>
