@@ -11,12 +11,32 @@ export const load: PageServerLoad = async ( { locals: { supabase, safeGetSession
 	let now = new Date();
 
 	const { data: futureFixtures, error } = await supabase.from( 'fixtures' )
-		.select()
+		.select( `id,
+			tipoff,
+			hometeam:teams!fixtures_hometeam_id_fkey(id, name),
+			awayteam:teams!fixtures_awayteam_id_fkey(id, name),
+			homeScore,
+			awayScore,
+			venue,
+			mapLink,
+			scoresheet,
+			stats,
+			videoURL` )
 		.gt( 'tipoff', now.toISOString() )
 		.order( 'tipoff', { ascending: true } );
 
 	const { data: pastFixtures } = await supabase.from( 'fixtures' )
-		.select()
+		.select( `id,
+			tipoff,
+			hometeam:teams!fixtures_hometeam_id_fkey(id, name),
+			awayteam:teams!fixtures_awayteam_id_fkey(id, name),
+			homeScore,
+			awayScore,
+			venue,
+			mapLink,
+			scoresheet,
+			stats,
+			videoURL` )
 		.order( 'tipoff', { ascending: false } )
 		.lt( 'tipoff', now.toISOString() );
 

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	let { data } = $props();
 
 	const formatDate = new Intl.DateTimeFormat( 'en-GB', {
@@ -15,7 +15,7 @@
 	} );
 
 	async function deleteRecord( record ) {
-		const isConfirmed = window.confirm( `Are you sure you want to delete "${record.homeTeam} vs ${record.awayTeam}"?` );
+		const isConfirmed = window.confirm( `Are you sure you want to delete "${record.hometeam?.name || 'TBD'} vs ${record.awayteam?.name || 'TBD'}"?` );
 
 		if ( isConfirmed ) {
 			const formData = new FormData();
@@ -52,7 +52,7 @@
 				<tr>
 					<td>{ formatDate.format( new Date( fixture.tipoff ) ) }</td>
 					<td>{ formatTipoff.format( new Date( fixture.tipoff ) ) }</td>
-					<td><a href="/fixtures/{ fixture.id }">{ fixture.homeTeam } vs { fixture.awayTeam }</a></td>
+					<td><a href="/fixtures/{ fixture.id }">{ fixture.hometeam?.name || 'TBD' } vs { fixture.awayteam?.name || 'TBD' }</a></td>
 					<td><button onclick={ () => deleteRecord( fixture ) }>Delete</button></td>
 				</tr>
 			{/each}
@@ -78,7 +78,7 @@
 				<tr>
 					<td>{ formatDate.format( new Date( fixture.tipoff ) ) }</td>
 					<td>{ formatTipoff.format( new Date( fixture.tipoff ) ) }</td>
-					<td><a href="/fixtures/{ fixture.id }">{ fixture.homeTeam } vs { fixture.awayTeam }</a></td>
+					<td><a href="/fixtures/{ fixture.id }">{ fixture.hometeam?.name || 'TBD' } vs { fixture.awayteam?.name || 'TBD' }</a></td>
 					<td><button onclick={ () => deleteRecord( fixture ) }>Delete</button></td>
 				</tr>
 			{/each}
