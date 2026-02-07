@@ -50,12 +50,12 @@
 	<input id="mapLink" name="mapLink" type="url" value={ data.fixture?.mapLink || '' }>
 
 	<label for="scoresheet">Score sheet</label>
-	<input id="scoresheet" name="scoresheet" type="checkbox" value={ data.fixture?.scoresheet || '' } checked={ data.fixture?.scoresheet || '' }>
+	<input id="scoresheet" name="scoresheet" type="checkbox" checked={ data.fixture?.scoresheet ?? false }>
 
 	<br>
 
 	<label for="stats">Stats</label>
-	<input id="stats" name="stats" type="checkbox" value={ data.fixture?.stats || false } checked={ data.fixture?.stats || '' }>
+	<input id="stats" name="stats" type="checkbox" checked={ data.fixture?.stats ?? false }>
 
 	<br>
 
