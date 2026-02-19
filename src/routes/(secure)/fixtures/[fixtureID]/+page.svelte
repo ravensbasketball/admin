@@ -3,6 +3,8 @@
 
 	export let data: PageData;
 	export let form: ActionData;
+
+	let selectedPlayers = new Set( data.assignedPlayers.map( p => p.player_id ) );
 </script>
 
 <h1>{ data.fixture ? 'Update' : 'Add' } Fixture</h1>
@@ -49,18 +51,29 @@
 	<label for="mapLink">Map link</label>
 	<input id="mapLink" name="mapLink" type="url" value={ data.fixture?.mapLink || '' }>
 
-	<label for="scoresheet">Score sheet</label>
-	<input id="scoresheet" name="scoresheet" type="checkbox" checked={ data.fixture?.scoresheet ?? false }>
+	<p>
+		<label for="scoresheet">
+			<input id="scoresheet" name="scoresheet" type="checkbox" checked={ data.fixture?.scoresheet ?? false }>
+			Score sheet
+		</label>
 
-	<br>
-
-	<label for="stats">Stats</label>
-	<input id="stats" name="stats" type="checkbox" checked={ data.fixture?.stats ?? false }>
-
-	<br>
+		<label for="stats">
+			<input id="stats" name="stats" type="checkbox" checked={ data.fixture?.stats ?? false }>
+			Stats
+		</label>
+	</p>
 
 	<label for="videoURL">Video link</label>
 	<input id="videoURL" name="videoURL" type="url" value={ data.fixture?.videoURL || '' } >
+
+	<h3>Players</h3>
+
+	{#each data.players as player}
+		<label class="player-checkbox">
+			<input name="chosenPlayers" type="checkbox" value={ player.id } checked={ selectedPlayers.has( player.id ) }>
+			{ player.givenName } { player.familyName }
+		</label>
+	{/each}
 
 	<br>
 	<button>{data.fixture ? 'Update' : 'Add'} Fixture</button>

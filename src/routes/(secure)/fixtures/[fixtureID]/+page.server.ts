@@ -10,9 +10,20 @@ export const load: PageServerLoad = async ( { params, locals: { supabase, safeGe
 	}
 
 	const { data: teams, error: teamsError } = await supabase
-		.from('teams')
-		.select('id, name')
-		.order('name');
+		.from( 'teams' )
+		.select( 'id, name' )
+		.order( 'name' );
+
+	const { data: players, error: playersError } = await supabase
+		.from( 'players' )
+		.select( '*' )
+		.order( 'givenName', { ascending: true } )
+		.order( 'familyName', { ascending: true } );
+
+	const { data: assignedPlayers, error: assignedPlayersError } = await supabase
+		.from('fixture_players')
+		.select( 'player_id' )
+		.eq( 'fixture_id', params.fixtureID );
 
 	if ( teamsError ) {
 		console.error( 'Error loading teams:', teamsError );
@@ -30,17 +41,25 @@ export const load: PageServerLoad = async ( { params, locals: { supabase, safeGe
 		if ( fixtureError ) {
 			console.error( 'Error loading fixture:', fixtureError );
 
-			return { teams: teams || [], fixture: null };
+			return {
+				teams: teams || [],
+				players: players || [],
+				fixture: null
+			};
 		}
 
 		return {
 			teams: teams || [],
-			fixture: fixture as Fixture
+			players: players || [],
+			assignedPlayers: assignedPlayers || [],
+			fixture: fixture as Fixture,
 		};
 	}
 
 	return {
 		teams: teams || [],
+		players: players || [],
+		assignedPlayers: assignedPlayers || [],
 		fixture: null
 	};
 }
@@ -62,9 +81,10 @@ export const actions: Actions = {
 		const awayScore = formData.get( 'awayScore' ) as string
 		const venue = formData.get( 'venue' ) as string
 		const mapLink = formData.get( 'mapLink' ) as string
-		const scoresheet = formData.get( 'scoresheet' ) as string
-		const stats = formData.get( 'stats' ) as string
+		const scoresheet = formData.get( 'scoresheet' ) as boolean
+		const stats = formData.get( 'stats' ) as boolean
 		const videoURL = formData.get( 'videoURL' ) as string
+		const chosenPlayers = formData.getAll( 'chosenPlayers' )
 
 		const { fixtureID } = params;
 
@@ -82,14 +102,24 @@ export const actions: Actions = {
 		};
 
 		if ( fixtureID === 'add' ) {
-			const { error } = await supabase.from( 'fixtures' )
-				.insert( fixtureData );
+			const { data, error } = await supabase.from( 'fixtures' )
+				.insert( fixtureData )
+				.select( 'id' )
+				.single();
 
 			if ( error ) {
 				return fail( 500, {
 					error: error.message
 				} );
 			}
+
+			const fixture_players = chosenPlayers.map( chosenPlayer => ( {
+				fixture_id: data.id,
+				player_id: chosenPlayer
+			} ) );
+
+			const { errorPlayers } = await supabase.from( 'fixture_players' )
+				.insert( fixture_players );
 
 			throw redirect( 303, '/fixtures/add' );
 		} else {
@@ -100,6 +130,24 @@ export const actions: Actions = {
 			if ( error ) {
 				return fail( 500, {
 					error: error.message
+				} );
+			}
+
+			const { errorPlayersDelete } = await supabase.from( 'fixture_players' )
+				.delete()
+				.eq( 'fixture_id', fixtureID );
+
+			const fixture_players = chosenPlayers.map( chosenPlayer => ( {
+				fixture_id: fixtureID,
+				player_id: chosenPlayer
+			} ) );
+
+			const { errorPlayers } = await supabase.from( 'fixture_players' )
+				.insert( fixture_players );
+
+			if ( errorPlayers ) {
+				return fail( 500, {
+					error: errorPlayers.message
 				} );
 			}
 
